@@ -7,7 +7,7 @@ class messaging:
 		self.table = {}
 		self.myPubKey = myPubKey
 		self.myPort = 54542
-
+		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broadCasting.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 		self.broadCasting.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
@@ -18,6 +18,7 @@ class messaging:
 		self.mySocket.setblocking(0)
 
 		answerThread = threading.Thread(target=self.Answer, args=(self))
+		self.table[self.myPubKey] = (self.myIP,time.time())
 
 	def iplookup(self, targetPubKey):
 		try:
@@ -77,5 +78,5 @@ class messaging:
 
 	def getMyIP(self):
 		s = socket(AF_INET, SOCK_DGRAM)
-		s.connet(("8.8.8.8", 80))
+		s.connect(("8.8.8.8", 80))
 		return s.getsockname()[0]
