@@ -18,6 +18,7 @@ class messaging:
 		self.ipReceivingSocket.setblocking(0)
 
 		answerThread = threading.Thread(target=self.Answer)
+		answerThread.start()
 		self.table[self.myPubKey] = (self.myIP,time.time())
 
 	def iplookup(self, targetPubKey):
