@@ -11,9 +11,9 @@ class messaging:
 		self.lock = threading.Lock()
 		self.table = {}
 		self.myPubKey = myPubKey
-		self.broadCastingPort = 43542
-		self.ipReceivingPort = 43541
-		self.messageReceivingPort = 43540
+		self.broadCastingPort = 62542
+		self.ipReceivingPort = 62541
+		self.messageReceivingPort = 62540
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broacastReceivingSocket = socket(AF_INET,SOCK_DGRAM)
@@ -97,7 +97,7 @@ class messaging:
 			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address[0], self.ipReceivingPort))
 
 	def sendMessage(self,recipientPubKey,message):
-		print("Finding IP!")
+		print("Finding IP of "+ recipientPubKey)
 		ip = self.iplookups(recipientPubKey)
 		if ip:
 			print("IP found!")
