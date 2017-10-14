@@ -5,9 +5,9 @@ class messaging:
 	def __init__(self, myPubKey):
 		self.table = {}
 		self.myPubKey = myPubKey
-        broadCasting = socket(AF_INET, SOCK_DGRAM)
-        broadCasting.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-        broadCasting.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
+		self.broadCasting.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+		self.broadCasting.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
 
 	def iplookup(self, targetPubKey):
