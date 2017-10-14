@@ -46,12 +46,12 @@ class messaging:
 		while True:
 			try:
 				self.ipReceivingSocket.settimeout(None)
-				message, clientAddress = self.ipReceivingSocket.recvfrom(2048)
+				message, Address = self.ipReceivingSocket.recvfrom(2048)
 				decodedMessage = message.decode()
 				print("Received:\n ", str(decodedMessage))
 				if decodedMessage == targetPubKey:
 					self.ipReceivingSocket.settimeout(None)
-					self.table[targetPubKey] = (clientAddress,time.time())
+					self.table[targetPubKey] = (Address[0],time.time())
 					print("Yay")
 					break
 			except socket.timeout:
