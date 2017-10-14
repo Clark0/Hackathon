@@ -27,7 +27,7 @@ class messaging:
 				return targetTuple[0]
 			else:
 				del(self.table[targetPubKey])
-				return self.ipLookUp(targetPubKey)
+				return self.iplookup(targetPubKey)
 
 		except KeyError:
 			self.ask(targetPubKey)
@@ -51,7 +51,7 @@ class messaging:
 				print("Received:\n ", str(decodedMessage))
 				if decodedMessage == targetPubKey:
 					self.ipReceivingSocket.settimeout(None)
-					self.table[targetPubKey] = clientAddress
+					self.table[targetPubKey] = (clientAddress,time.time())
 					print("Yay")
 					break
 			except socket.timeout:
