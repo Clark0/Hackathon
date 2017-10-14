@@ -1,5 +1,6 @@
 import time
 from socket import *
+import threading
 
 class messaging:
 	def __init__(self, myPubKey):
@@ -13,10 +14,10 @@ class messaging:
 		self.broadCasting.bind(('',self.myPort))
 		
 		self.mySocket = socket(AF_INET,SOCK_DGRAM)
-		self.mySocket.bind(('',self.myPort))
+		self.mySocket.bind(('',self.myPort + 1))
 		self.mySocket.setblocking(0)
 
-		answerThread = threading.Thread(target=Answer, args=(self))
+		answerThread = threading.Thread(target=self.Answer, args=(self))
 
 
 
@@ -57,8 +58,8 @@ class messaging:
 				break
 
 	def ask(self, targetPubKey):
-		t1 = threading.Thread(target=broadcast, args=(self, targetPubKey))
-		t2 = threading.Thread(target=recvAnswer, args=(self, targetPubKey))
+		t1 = threading.Thread(target=self.broadcast, args=(targetPubKey))
+		t2 = threading.Thread(target=self.recvAnswer, args=(targetPubKey))
 		t2.start()
 		t1.start()
 
