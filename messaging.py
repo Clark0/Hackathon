@@ -14,7 +14,7 @@ class messaging:
 		self.broadCasting.bind(('',self.myPort))
 		
 		self.mySocket = socket(AF_INET,SOCK_DGRAM)
-		self.mySocket.bind(('',self.myPort + 1))
+		self.mySocket.bind(('',self.myPort - 1))
 		self.mySocket.setblocking(0)
 
 		answerThread = threading.Thread(target=self.Answer, args=(self))
@@ -52,7 +52,9 @@ class messaging:
 				decodedMessage = message.decode()
 				print("Received:\n ", str(decodedMessage))
 				if decodedMessage == targetPubKey:
+					self.mySocket.settimeout(None)
 					self.table[targetPubKey] = clientAddress
+					print("Yay")
 					break
 			except socket.timeout:
 				break
