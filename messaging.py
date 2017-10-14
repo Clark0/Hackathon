@@ -1,9 +1,12 @@
 import time
 from socket import *
 import threading
+from queue import Queue
 
 class messaging:
 	def __init__(self, myPubKey):
+		self.broadcastQ = Queue()
+		self.lock = threading.Lock()
 		self.table = {}
 		self.myPubKey = myPubKey
 		self.broadCastingPort = 54542
@@ -18,6 +21,9 @@ class messaging:
 
 		answerThread = threading.Thread(target=self.Answer)
 		answerThread.start()
+		broadcasterThread = threading.Thread(target=self.broadcaster)
+		broadcasterThread.start()
+
 		self.table[self.myPubKey] = (self.myIP,float('Inf'))
 
 	def iplookup(self, targetPubKey):
@@ -32,6 +38,12 @@ class messaging:
 		except KeyError:
 			self.ask(targetPubKey)
 
+	def broadcaster(self):
+		while True:
+			task = self.broadcastQ.get()
+			self.broadcast(task)
+			self.broadcastQ.task_done()
+
 	def broadcast(self, targetPubKey):
 		for x in range(255):
 			for y in range(255):
@@ -40,6 +52,7 @@ class messaging:
 					time.sleep(0.00005)
 				except:
 					time.sleep(0.0001)
+
 
 	def recvAnswer(self, targetPubKey):  # received other's reply(IP addr) to my broadcasting
 		while True:
@@ -55,10 +68,9 @@ class messaging:
 				break
 
 	def ask(self, targetPubKey):
-		t1 = threading.Thread(target=self.broadcast,args = (targetPubKey,))
-		t2 = threading.Thread(target=self.recvAnswer,args = (targetPubKey,))
-		t2.start()
-		t1.start()
+		self.broadcastQ.put(targetPubKey)
+		t = threading.Thread(target=self.recvAnswer,args = (targetPubKey,))
+		t.start()
 
 	def Answer(self):
 		while True:
