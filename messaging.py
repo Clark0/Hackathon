@@ -66,7 +66,6 @@ class messaging:
 	def Answer(self):
 		answerSocket = socket(AF_INET,SOCK_DGRAM)
 		answerSocket.bind(('',self.broadCastingPort))
-		answerSocket.setblocking(0)
 		print("The server is ready to Answer")
 		while True:
 			message, Address = answerSocket.recvfrom(2048)
