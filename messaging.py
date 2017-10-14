@@ -19,10 +19,6 @@ class messaging:
 
 		answerThread = threading.Thread(target=self.Answer, args=(self))
 
-
-
-
-
 	def iplookup(self, targetPubKey):
 		try:
 			targetTuple = self.table[targetPubKey]
@@ -43,11 +39,12 @@ class messaging:
 					time.sleep(0.00005)
 				except:
 					time.sleep(0.0001)
+		print("broadcast done!")
 
 	def recvAnswer(self):  # received other's reply(IP addr) to my broadcasting
 		while True:
 			try:
-				self.mySocket.settimeout(10)
+				self.mySocket.settimeout(None)
 				message, clientAddress = self.mySocket.recvfrom(2048)
 				decodedMessage = message.decode()
 				print("Received:\n ", str(decodedMessage))
@@ -67,7 +64,7 @@ class messaging:
 
 	def Answer(self):
 		answerSocket = socket(AF_INET,SOCK_DGRAM)
-		answerSocket.bind(('',myPort))
+		answerSocket.bind(('',self.myPort + 1))
 		answerSocket.setblocking(0)
 		print("The server is ready to Answer")
 		while True:
@@ -75,7 +72,7 @@ class messaging:
 			decodedMessage = message.decode()
 			if decodedMessage != self.myPubKey:
 				continue
-			answerSocket.sendto(myPubKey.encode(),Address)
+			answerSocket.sendto(self.myPubKey.encode(),(Address, self.myPort - 1))
 			print("Answer to " + str(Address) +"\n")
 
 	def getMyIP(self):
