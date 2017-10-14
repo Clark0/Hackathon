@@ -14,7 +14,7 @@ class messaging:
 		self.broadCasting.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 		
 		self.ipReceivingSocket = socket(AF_INET,SOCK_DGRAM)
-		self.ipReceivingSocket.bind(('',self.ipReceivingSocket))
+		self.ipReceivingSocket.bind(('',self.ipReceivingPort))
 		self.ipReceivingSocket.setblocking(0)
 
 		answerThread = threading.Thread(target=self.Answer, args=(self))
