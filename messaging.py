@@ -68,7 +68,7 @@ class messaging:
 		while True:
 			message, Address = self.broacastReceivingSocket.recvfrom(2048)
 			decodedMessage = message.decode()
-			print("Received PubKey: "+decodedMessage+" from "+Address)
+			print("Received PubKey: "+decodedMessage+" from "+Address[0])
 			if decodedMessage != self.myPubKey:
 				print("continue")
 				continue
