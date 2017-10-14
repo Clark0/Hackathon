@@ -35,7 +35,7 @@ class messaging:
 		except KeyError:
 			self.ask(targetPubKey)
 
-	def broadcast(self, targetPubKey):
+	def broadcast(self):
 		for x in range(255):
 			for y in range(255):
 				try:
@@ -44,22 +44,22 @@ class messaging:
 				except:
 					time.sleep(0.0001)
 
-	def recvAnswer(self, targetPubKey):  # received other's reply(IP addr) to my broadcasting
+	def recvAnswer(self):  # received other's reply(IP addr) to my broadcasting
 		while True:
 			try:
-				mySocket.settimeout(10)
+				self.mySocket.settimeout(10)
 				message, clientAddress = self.mySocket.recvfrom(2048)
 				decodedMessage = message.decode()
 				print("Received:\n ", str(decodedMessage))
 				if decodedMessage == targetPubKey:
 					self.table[targetPubKey] = clientAddress
 					break
-			except socke.timeout:
+			except socket.timeout:
 				break
 
 	def ask(self, targetPubKey):
-		t1 = threading.Thread(target=self.broadcast, args=(targetPubKey))
-		t2 = threading.Thread(target=self.recvAnswer, args=(targetPubKey))
+		t1 = threading.Thread(target=self.broadcast)
+		t2 = threading.Thread(target=self.recvAnswer)
 		t2.start()
 		t1.start()
 
