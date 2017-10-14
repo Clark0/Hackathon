@@ -18,7 +18,7 @@ class messaging:
 
 		answerThread = threading.Thread(target=self.Answer)
 		answerThread.start()
-		self.table[self.myPubKey] = (self.myIP,time.time())
+		self.table[self.myPubKey] = (self.myIP,float('Inf'))
 
 	def iplookup(self, targetPubKey):
 		try:
