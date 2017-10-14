@@ -31,7 +31,8 @@ class messaging:
 			ip = self.iplookup(targetPubKey)
 			if ip:
 				return ip
-			time.sleep(5)
+			time.sleep(6)
+			
 
 	def iplookup(self, targetPubKey):
 		try:
