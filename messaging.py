@@ -72,7 +72,7 @@ class messaging:
 			if decodedMessage != self.myPubKey:
 				print("continue")
 				continue
-			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address, self.ipReceivingPort))
+			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address[0], self.ipReceivingPort))
 			print("Answer to " + str(Address) +"\n")
 
 	def getMyIP(self):
