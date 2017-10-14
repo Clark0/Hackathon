@@ -40,7 +40,6 @@ class messaging:
 					time.sleep(0.00005)
 				except:
 					time.sleep(0.0001)
-		print("broadcast done!"+targetPubKey)
 
 	def recvAnswer(self, targetPubKey):  # received other's reply(IP addr) to my broadcasting
 		while True:
@@ -48,11 +47,9 @@ class messaging:
 				self.ipReceivingSocket.settimeout(None)
 				message, Address = self.ipReceivingSocket.recvfrom(2048)
 				decodedMessage = message.decode()
-				print("Received:\n ", str(decodedMessage))
 				if decodedMessage == targetPubKey:
 					self.ipReceivingSocket.settimeout(None)
 					self.table[targetPubKey] = (Address[0],time.time())
-					print("Yay")
 					break
 			except socket.timeout:
 				break
@@ -64,16 +61,12 @@ class messaging:
 		t1.start()
 
 	def Answer(self):
-		print("The server is ready to Answer")
 		while True:
 			message, Address = self.broacastReceivingSocket.recvfrom(2048)
 			decodedMessage = message.decode()
-			print("Received PubKey: "+decodedMessage+" from "+Address[0])
 			if decodedMessage != self.myPubKey:
-				print("continue")
 				continue
 			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address[0], self.ipReceivingPort))
-			print("Answer to " + str(Address) +"\n")
 
 	def getMyIP(self):
 		s = socket(AF_INET, SOCK_DGRAM)
