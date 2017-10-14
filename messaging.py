@@ -7,6 +7,7 @@ import messageProcessing
 class messaging:
 	def __init__(self, myPubKey):
 		self.broadcastQ = Queue()
+		self.messageQ = Queue()
 		self.lock = threading.Lock()
 		self.table = {}
 		self.myPubKey = myPubKey
@@ -22,12 +23,15 @@ class messaging:
 		self.ipReceivingSocket.bind(('',self.ipReceivingPort))
 		self.messageSendingSocket = socket(AF_INET, SOCK_STREAM)
 		self.messageReceivingSocket = socket(AF_INET, SOCK_STREAM)
-		self.messageReceivingSocket.bind(("",messageReceivingPort))
+		self.messageReceivingSocket.bind(("",self.messageReceivingPort))
+		self.messageReceivingSocket.listen(1)
 
 		answerThread = threading.Thread(target=self.Answer)
 		answerThread.start()
 		broadcasterThread = threading.Thread(target=self.broadcaster)
 		broadcasterThread.start()
+		messageReceiverThread = threading.Thread(target=self.messageReceiver)
+		messageReceiverThread.start()
 
 		self.table[self.myPubKey] = (self.myIP,float('Inf'))
 
@@ -101,11 +105,35 @@ class messaging:
 															message)
 			try:
 				self.messageSendingSocket.connect((ip,self.messageReceivingPort))
-				self.messageSendingSocket.send(packedMsg.encode())
+				self.messageSendingSocket.send(packedMsg)
+				#this one need to add to encrypt later
 				self.messageSendingSocket.close()
+				self.updateTTL(recipientPubKey)
 				return True
+			except:
+				return False
 		else:
 			return False
+
+	def messageReceiver(self):
+		while True:
+			connectionSocket,Address = self.messageReceivingSocket.accept()
+			print(Address)
+			rawMsg = connectionSocket.recv(1024)
+			connectionSocket.close()
+			#this one need to add to encrypt later
+			self.messageQ.put(rawMsg)
+
+	def getMsgFromQ(self):
+		if not self.messageQ.empty():
+			msg = self.messageQ.get()
+			self.messageQ.task_done()
+			return msg
+
+	def updateTTL(self,pubKey):
+		prevRec = self.table[pubKey]
+		newRec = (prevRec[0],time.time())
+		self.table[pubKey] = newRec
 
 	def getMyIP(self):
 		s = socket(AF_INET, SOCK_DGRAM)
