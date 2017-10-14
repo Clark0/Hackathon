@@ -6,16 +6,16 @@ class messaging:
 	def __init__(self, myPubKey):
 		self.table = {}
 		self.myPubKey = myPubKey
-		self.myPort = 54542
+		self.broadCastingPort = 54542
+		self.ipReceivingPort = 54541
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broadCasting.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 		self.broadCasting.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-		self.broadCasting.bind(('',self.myPort))
 		
-		self.mySocket = socket(AF_INET,SOCK_DGRAM)
-		self.mySocket.bind(('',self.myPort - 1))
-		self.mySocket.setblocking(0)
+		self.ipReceivingSocket = socket(AF_INET,SOCK_DGRAM)
+		self.ipReceivingSocket.bind(('',self.ipReceivingSocket))
+		self.ipReceivingSocket.setblocking(0)
 
 		answerThread = threading.Thread(target=self.Answer, args=(self))
 		self.table[self.myPubKey] = (self.myIP,time.time())
@@ -36,7 +36,7 @@ class messaging:
 		for x in range(255):
 			for y in range(255):
 				try:
-					self.broadCasting.sendto(targetPubKey.encode(),('10.27.'+str(x)+'.'+str(y), self.myPort))
+					self.broadCasting.sendto(targetPubKey.encode(),('10.27.'+str(x)+'.'+str(y), self.broadCastingPort))
 					time.sleep(0.00005)
 				except:
 					time.sleep(0.0001)
@@ -45,12 +45,12 @@ class messaging:
 	def recvAnswer(self, targetPubKey):  # received other's reply(IP addr) to my broadcasting
 		while True:
 			try:
-				self.mySocket.settimeout(None)
-				message, clientAddress = self.mySocket.recvfrom(2048)
+				self.ipReceivingSocket.settimeout(None)
+				message, clientAddress = self.ipReceivingSocket.recvfrom(2048)
 				decodedMessage = message.decode()
 				print("Received:\n ", str(decodedMessage))
 				if decodedMessage == targetPubKey:
-					self.mySocket.settimeout(None)
+					self.ipReceivingSocket.settimeout(None)
 					self.table[targetPubKey] = clientAddress
 					print("Yay")
 					break
@@ -65,7 +65,7 @@ class messaging:
 
 	def Answer(self):
 		answerSocket = socket(AF_INET,SOCK_DGRAM)
-		answerSocket.bind(('',self.myPort + 1))
+		answerSocket.bind(('',self.broadCastingPort))
 		answerSocket.setblocking(0)
 		print("The server is ready to Answer")
 		while True:
@@ -73,7 +73,7 @@ class messaging:
 			decodedMessage = message.decode()
 			if decodedMessage != self.myPubKey:
 				continue
-			answerSocket.sendto(self.myPubKey.encode(),(Address, self.myPort - 1))
+			answerSocket.sendto(self.myPubKey.encode(),(Address, self.ipReceivingSocket))
 			print("Answer to " + str(Address) +"\n")
 
 	def getMyIP(self):
