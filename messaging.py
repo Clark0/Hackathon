@@ -64,12 +64,13 @@ class messaging:
 		t1.start()
 
 	def Answer(self):
-
 		print("The server is ready to Answer")
 		while True:
 			message, Address = self.broacastReceivingSocket.recvfrom(2048)
 			decodedMessage = message.decode()
+			print("Received PubKey: "+decodedMessage+" from "+Address)
 			if decodedMessage != self.myPubKey:
+				print("continue")
 				continue
 			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address, self.ipReceivingPort))
 			print("Answer to " + str(Address) +"\n")
