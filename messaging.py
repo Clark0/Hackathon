@@ -11,9 +11,9 @@ class messaging:
 		self.lock = threading.Lock()
 		self.table = {}
 		self.myPubKey = myPubKey
-		self.broadCastingPort = 54542
-		self.ipReceivingPort = 54541
-		self.messageReceivingPort = 54540
+		self.broadCastingPort = 43542
+		self.ipReceivingPort = 43541
+		self.messageReceivingPort = 43540
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broacastReceivingSocket = socket(AF_INET,SOCK_DGRAM)
@@ -42,7 +42,6 @@ class messaging:
 				return ip
 			time.sleep(6)
 			
-
 	def iplookup(self, targetPubKey):
 		try:
 			targetTuple = self.table[targetPubKey]
@@ -98,21 +97,28 @@ class messaging:
 			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address[0], self.ipReceivingPort))
 
 	def sendMessage(self,recipientPubKey,message):
+		print("Finding IP!")
 		ip = self.iplookups(recipientPubKey)
 		if ip:
+			print("IP found!")
 			packedMsg = messageProcessing.messagePacking(self.myPubKey,
 															recipientPubKey,
 															message)
 			try:
+				print("Sending Message!")
+				self.messageSendingSocket = socket(AF_INET, SOCK_STREAM)
 				self.messageSendingSocket.connect((ip,self.messageReceivingPort))
 				self.messageSendingSocket.send(packedMsg)
 				#this one need to add to encrypt later
 				self.messageSendingSocket.close()
 				self.updateTTL(recipientPubKey)
+				print("Message Sent!")
 				return True
 			except:
+				print("Sending Failed!")
 				return False
 		else:
+			print("IP not found!")
 			return False
 
 	def messageReceiver(self):
