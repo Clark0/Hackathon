@@ -43,22 +43,22 @@ class messaging:
 				except:
 					time.sleep(0.0001)
 
-	def recvAnswer(self):  # received other's reply(IP addr) to my broadcasting
+	def recvAnswer(self, targetPubKey):  # received other's reply(IP addr) to my broadcasting
 		while True:
 			try:
 				mySocket.settimeout(10)
 				message, clientAddress = self.mySocket.recvfrom(2048)
 				decodedMessage = message.decode()
 				print("Received:\n ", str(decodedMessage))
-				
-				# if decodedMessage.....:
-				break
+				if decodedMessage == targetPubKey:
+					self.table[targetPubKey] = clientAddress
+					break
 			except socke.timeout:
 				break
 
 	def ask(self, targetPubKey):
 		t1 = threading.Thread(target=broadcast, args=(self, targetPubKey))
-		t2 = threading.Thread(target=recvAnswer, args=(self))
+		t2 = threading.Thread(target=recvAnswer, args=(self, targetPubKey))
 		t2.start()
 		t1.start()
 
@@ -74,11 +74,6 @@ class messaging:
 				continue
 			answerSocket.sendto(myPubKey.encode(),Address)
 			print("Answer to " + str(Address) +"\n")
-
-
-
-
-
 
 	def getMyIP(self):
 		s = socket(AF_INET, SOCK_DGRAM)
