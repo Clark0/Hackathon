@@ -2,6 +2,7 @@ import time
 from socket import *
 import threading
 from queue import Queue
+import messageProcessing
 
 class messaging:
 	def __init__(self, myPubKey):
@@ -11,6 +12,7 @@ class messaging:
 		self.myPubKey = myPubKey
 		self.broadCastingPort = 54542
 		self.ipReceivingPort = 54541
+		self.messageReceivingPort = 54540
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broacastReceivingSocket = socket(AF_INET,SOCK_DGRAM)
@@ -18,6 +20,9 @@ class messaging:
 		self.ipSendingSocket = socket(AF_INET,SOCK_DGRAM)
 		self.ipReceivingSocket = socket(AF_INET,SOCK_DGRAM)
 		self.ipReceivingSocket.bind(('',self.ipReceivingPort))
+		self.messageSendingSocket = socket(AF_INET, SOCK_STREAM)
+		self.messageReceivingSocket = socket(AF_INET, SOCK_STREAM)
+		self.messageReceivingSocket.bind(("",messageReceivingPort))
 
 		answerThread = threading.Thread(target=self.Answer)
 		answerThread.start()
@@ -87,6 +92,20 @@ class messaging:
 			if decodedMessage != self.myPubKey:
 				continue
 			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address[0], self.ipReceivingPort))
+
+	def sendMessage(self,recipientPubKey,message):
+		ip = self.iplookups(recipientPubKey)
+		if ip:
+			packedMsg = messageProcessing.messagePacking(self.myPubKey,
+															recipientPubKey,
+															message)
+			try:
+				self.messageSendingSocket.connect((ip,self.messageReceivingPort))
+				self.messageSendingSocket.send(packedMsg.encode())
+				self.messageSendingSocket.close()
+				return True
+		else:
+			return False
 
 	def getMyIP(self):
 		s = socket(AF_INET, SOCK_DGRAM)
