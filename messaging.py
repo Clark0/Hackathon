@@ -10,12 +10,11 @@ class messaging:
 		self.ipReceivingPort = 54541
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
-		self.broadCasting.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-		self.broadCasting.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-		
+		self.broacastReceivingSocket = socket(AF_INET,SOCK_DGRAM)
+		self.broacastReceivingSocket.bind(('',self.broadCastingPort))
+		self.ipSendingSocket = socket(AF_INET,SOCK_DGRAM)
 		self.ipReceivingSocket = socket(AF_INET,SOCK_DGRAM)
 		self.ipReceivingSocket.bind(('',self.ipReceivingPort))
-		self.ipReceivingSocket.setblocking(0)
 
 		answerThread = threading.Thread(target=self.Answer)
 		answerThread.start()
@@ -65,15 +64,14 @@ class messaging:
 		t1.start()
 
 	def Answer(self):
-		answerSocket = socket(AF_INET,SOCK_DGRAM)
-		answerSocket.bind(('',self.broadCastingPort))
+
 		print("The server is ready to Answer")
 		while True:
-			message, Address = answerSocket.recvfrom(2048)
+			message, Address = self.broacastReceivingSocket.recvfrom(2048)
 			decodedMessage = message.decode()
 			if decodedMessage != self.myPubKey:
 				continue
-			answerSocket.sendto(self.myPubKey.encode(),(Address, self.ipReceivingSocket))
+			self.ipReceivingSocket.sendto(self.myPubKey.encode(),(Address, self.ipReceivingPort))
 			print("Answer to " + str(Address) +"\n")
 
 	def getMyIP(self):
