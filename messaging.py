@@ -26,7 +26,7 @@ class messaging:
 
 		self.table[self.myPubKey] = (self.myIP,float('Inf'))
 
-	def iplookups(self, targetPubKey)
+	def iplookups(self, targetPubKey):
 		for x in range(3):
 			ip = iplookup(targetPubKey)
 			if ip:
