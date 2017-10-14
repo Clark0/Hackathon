@@ -39,7 +39,7 @@ class messaging:
 		for x in range(255):
 			for y in range(255):
 				try:
-					self.broadCasting.sendto(targetPubKey.encode(),('10.27.'+str(x)+'.'+str(y), 54544))
+					self.broadCasting.sendto(targetPubKey.encode(),('10.27.'+str(x)+'.'+str(y), self.myPort))
 					time.sleep(0.00005)
 				except:
 					time.sleep(0.0001)
