@@ -26,6 +26,13 @@ class messaging:
 
 		self.table[self.myPubKey] = (self.myIP,float('Inf'))
 
+	def iplookups(self, targetPubKey)
+		for x in range(3):
+			ip = iplookup(targetPubKey)
+			if ip:
+				return ip
+			time.sleep(5)
+
 	def iplookup(self, targetPubKey):
 		try:
 			targetTuple = self.table[targetPubKey]
