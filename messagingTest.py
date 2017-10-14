@@ -28,8 +28,8 @@ def messageGetter():
 
 myPubKey = input("Input your PubKey: ")
 m = messaging.messaging(myPubKey)
-#messageGetterThread = threading.Thread(target=messageGetter)
-#messageGetterThread.start()
+messageGetterThread = threading.Thread(target=messageGetter)
+messageGetterThread.start()
 
 while True:
 	recipientPubKey = input("You wanna talk with: ")
