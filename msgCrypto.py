@@ -3,12 +3,12 @@ from Crypto.PublicKey import RSA
 def main():
 	generateKeys()
 	strPubKey, PrivKey = readKeys()
+	print(strPubKey)
 	PubKey = RSA.importKey(strPubKey.encode())
 
-	print(type(PubKey))
-
-	emsg = encrypt(PubKey, "shuang".encode())
-	print(decrypt(PrivKey, emsg).decode())
+	emsg = encrypt(PubKey, strPubKey)
+	print(type(emsg))
+	print(decrypt(PrivKey, emsg))
 
 def generateKeys():
 	key = RSA.generate(1024)
@@ -28,12 +28,12 @@ def readKeys():
 	return PubKey.decode("utf-8"), PrivKey
 
 def encrypt(PubKey, text):
-	emsg = PubKey.encrypt(text, "x")[0]
+	emsg = PubKey.encrypt(text.encode(), "x")[0]
 	return emsg
 
 def decrypt(PrivKey, emsg):
 	text = PrivKey.decrypt(emsg)
-	return text
+	return text.decode()
 
 if __name__ == "__main__":
 	main()

@@ -18,9 +18,9 @@ class messaging:
 		self.strPubKey, self.PrivKey = msgCrypto.readKeys()
 		self.PubKey = RSA.importKey(self.strPubKey.encode())
 
-		self.broadCastingPort = 62142
-		self.ipReceivingPort = 62141
-		self.messageReceivingPort = 62140
+		self.broadCastingPort = 62112
+		self.ipReceivingPort = 62111
+		self.messageReceivingPort = 62110
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broacastReceivingSocket = socket(AF_INET,SOCK_DGRAM)
@@ -109,7 +109,7 @@ class messaging:
 		ip = self.iplookups(recipientPubKey)
 		if ip:
 			print("IP found!")
-			packedMsg = messageProcessing.messagePacking(self.strPubKey,
+			packedMsg = messageProcessing.messagePacking(# self.strPubKey,
 															recipientPubKey,
 															message)
 			try:
