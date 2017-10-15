@@ -7,7 +7,7 @@ import time
 def messageSender():
 	while True:
 		message = "~"+input("")
-		if message!="EXIT":
+		if message!="~EXIT":
 			success = m.sendMessage(recipientPubKey,message)
 			if not success:
 				print("Connection is broken!/Unable to connect!")
@@ -36,4 +36,6 @@ messageGetterThread.start()
 
 while True:
 	recipientPubKey = input("You wanna talk with: ")
+	if m.iplookups(recipientPubKey):
+		print("Connection established")
 	messageSender()
