@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff1473cd-96e6-4556-a821-93ea212b87c8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/messageProcessing.py" afterPath="$PROJECT_DIR$/messageProcessing.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/messaging.py" afterPath="$PROJECT_DIR$/messaging.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/PrivKey.pem" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/PubKey.pem" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/messagingTest.py" afterPath="$PROJECT_DIR$/messagingTest.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,7 +23,7 @@
         <entry file="file://$PROJECT_DIR$/msgCrypto.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-199">
-              <caret line="4" column="35" lean-forward="true" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
+              <caret line="4" column="35" lean-forward="false" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -32,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/messaging.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="44">
-              <caret line="137" column="8" lean-forward="true" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
+              <caret line="137" column="8" lean-forward="false" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -43,8 +44,8 @@
       <file leaf-file-name="messagingTest.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/messagingTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="20" column="37" lean-forward="true" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+            <state relative-caret-position="173">
+              <caret line="22" column="37" lean-forward="false" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -56,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/messageProcessing.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -85,9 +86,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/msgCrypto.py" />
-        <option value="$PROJECT_DIR$/messagingTest.py" />
         <option value="$PROJECT_DIR$/messaging.py" />
         <option value="$PROJECT_DIR$/messageProcessing.py" />
+        <option value="$PROJECT_DIR$/messagingTest.py" />
       </list>
     </option>
   </component>
@@ -98,8 +99,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-27" />
-    <option name="y" value="307" />
+    <option name="x" value="-261" />
+    <option name="y" value="540" />
     <option name="width" value="1079" />
     <option name="height" value="734" />
   </component>
@@ -205,7 +206,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-27" y="307" width="1079" height="734" extended-state="0" />
+    <frame x="-261" y="540" width="1079" height="734" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2493049" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -299,7 +300,7 @@
     <entry file="file://$PROJECT_DIR$/msgCrypto.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-199">
-          <caret line="4" column="35" lean-forward="true" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
+          <caret line="4" column="35" lean-forward="false" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -315,7 +316,7 @@
     <entry file="file://$PROJECT_DIR$/messageProcessing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -325,7 +326,7 @@
     <entry file="file://$PROJECT_DIR$/messaging.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
-          <caret line="137" column="8" lean-forward="true" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
+          <caret line="137" column="8" lean-forward="false" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -334,8 +335,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/messagingTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="20" column="37" lean-forward="true" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+        <state relative-caret-position="173">
+          <caret line="22" column="37" lean-forward="false" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>

@@ -26,7 +26,9 @@ def messageGetter():
 		time.sleep(1)
 
 m = messaging.messaging()
-print("My public Key is: " + m.strPubKey)
+print("My public Key is:")
+print(m.strPubKey)
+print()
 messageGetterThread = threading.Thread(target=messageGetter)
 messageGetterThread.start()
 
