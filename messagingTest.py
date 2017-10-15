@@ -36,7 +36,7 @@ messageGetterThread.start()
 
 while True:
 	recipientPubKey = input("You wanna talk with: ")
-	if m.iplookups(recipientPubKey):
+	if m.sendMessage(recipientPubKey,"==Connection Test=="):
 		print("Connection established")
 	else:
 		print("Connection failed!\nType your message to retry!")
