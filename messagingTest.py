@@ -38,4 +38,6 @@ while True:
 	recipientPubKey = input("You wanna talk with: ")
 	if m.iplookups(recipientPubKey):
 		print("Connection established")
+	else:
+		print("Connection failed!\nType your message to retry!")
 	messageSender()
