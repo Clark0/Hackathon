@@ -97,34 +97,26 @@ class messaging:
 			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address[0], self.ipReceivingPort))
 
 	def sendMessage(self,recipientPubKey,message):
-		print("Finding IP of "+ recipientPubKey)
 		ip = self.iplookups(recipientPubKey)
 		if ip:
-			print("IP found!")
 			packedMsg = messageProcessing.messagePacking(self.myPubKey,
 															recipientPubKey,
 															message)
 			try:
-				print("Sending Message!")
 				self.messageSendingSocket = socket(AF_INET, SOCK_STREAM)
 				self.messageSendingSocket.connect((ip,self.messageReceivingPort))
 				self.messageSendingSocket.send(packedMsg)
 				#this one need to add to encrypt later
 				self.messageSendingSocket.close()
-				self.updateTTL(recipientPubKey)
-				print("Message Sent!")
 				return True
 			except:
-				print("Sending Failed!")
 				return False
 		else:
-			print("IP not found!")
 			return False
 
 	def messageReceiver(self):
 		while True:
 			connectionSocket,Address = self.messageReceivingSocket.accept()
-			print(Address)
 			rawMsg = connectionSocket.recv(1024)
 			connectionSocket.close()
 			#this one need to add to encrypt later
