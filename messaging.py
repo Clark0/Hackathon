@@ -27,6 +27,9 @@ class messaging:
 		self.broadCastingPort = 62542
 		self.ipReceivingPort = 62541
 		self.messageReceivingPort = 62540
+<<<<<<< HEAD
+>>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
+=======
 >>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
