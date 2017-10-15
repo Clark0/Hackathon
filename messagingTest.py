@@ -6,7 +6,7 @@ import time
 
 def messageSender():
 	while True:
-		message = input("")
+		message = "~"+input("")
 		if message!="EXIT":
 			m.sendMessage(recipientPubKey,message)
 		else:
@@ -19,7 +19,7 @@ def messageGetter():
 			msg = messageProcessing.messageUnpacking(rawmsg)
 			print()
 			print(msg['from']+" says:")
-			print(msg['content'])
+			print(msg['content'][1:])
 			print("at "+msg['time-sent'])
 			print() 
 		time.sleep(1)

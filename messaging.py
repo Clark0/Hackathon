@@ -11,9 +11,9 @@ class messaging:
 		self.lock = threading.Lock()
 		self.table = {}
 		self.myPubKey = myPubKey
-		self.broadCastingPort = 62542
-		self.ipReceivingPort = 62541
-		self.messageReceivingPort = 62540
+		self.broadCastingPort = 62142
+		self.ipReceivingPort = 62141
+		self.messageReceivingPort = 62140
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broacastReceivingSocket = socket(AF_INET,SOCK_DGRAM)
