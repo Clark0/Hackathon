@@ -12,16 +12,12 @@ class messaging:
 		self.messageQ = Queue()
 		self.lock = threading.Lock()
 		self.table = {}
-<<<<<<< HEAD
 
 		# generate Public and Private Key pair
 		msgCrypto.generateKeys()
 		self.strPubKey, self.PrivKey = msgCrypto.readKeys()
-		self.PubKey = RSA.importKey(self.strPubKey.decode())
+		self.PubKey = RSA.importKey(self.strPubKey.encode())
 
-=======
-		self.myPubKey = myPubKey
->>>>>>> ae3c47172d9c608e4f18a7cbeea0765eecbc269a
 		self.broadCastingPort = 62142
 		self.ipReceivingPort = 62141
 		self.messageReceivingPort = 62140
