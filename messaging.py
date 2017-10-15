@@ -144,10 +144,10 @@ class messaging:
 			self.messageQ.task_done()
 			return msg
 
-	def updateTTL(self,pubKey):
-		prevRec = self.table[pubKey]
+	def updateTTL(self,strPubKey):
+		prevRec = self.table[strPubKey]
 		newRec = (prevRec[0],time.time())
-		self.table[pubKey] = newRec
+		self.table[strPubKey] = newRec
 
 	def getMyIP(self):
 		s = socket(AF_INET, SOCK_DGRAM)

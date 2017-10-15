@@ -8,7 +8,7 @@ def messageSender():
 	while True:
 		message = "~" + input("")
 		if message!="EXIT":
-			m.sendMessage(recipientPubKey,message)
+			m.sendMessage(recipientPubKey, message)
 		else:
 			break
 
@@ -16,9 +16,8 @@ def messageGetter():
 	while True:
 		rawmsg = m.getMsgFromQ()
 		if rawmsg:
-			msg = messageProcessing.messageUnpacking(rawmsg)
+			msg = messageProcessing.messageUnpacking(rawmsg, m.PrivKey)
 			print()
-			print(msg['from']+" says:")
 			print(msg['content'][1:])
 			print("at "+msg['time-sent'])
 			print() 
