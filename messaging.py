@@ -28,6 +28,9 @@ class messaging:
 		self.ipReceivingPort = 62541
 		self.messageReceivingPort = 62540
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
+=======
 >>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
 =======
 >>>>>>> parent of ae3c471... Fixed lost prefix in msg-content

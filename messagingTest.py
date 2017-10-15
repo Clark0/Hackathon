@@ -20,11 +20,14 @@ def messageSender():
 	while True:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		message = "~" + input("")
 		message = "~"+input("")
 		if message != "EXIT":
 			m.sendMessage(recipientPubKey, message)
 =======
+=======
+>>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
 =======
 >>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
 		message = input("")
@@ -42,8 +45,13 @@ def messageGetter():
 			print()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			# print(msg['from']+" says:")
 			print(msg['content'][1:])
+=======
+			print(msg['from']+" says:")
+			print(msg['content'])
+>>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
 =======
 			print(msg['from']+" says:")
 			print(msg['content'])
