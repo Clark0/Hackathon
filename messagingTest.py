@@ -8,7 +8,10 @@ def messageSender():
 	while True:
 		message = "~"+input("")
 		if message!="EXIT":
-			m.sendMessage(recipientPubKey,message)
+			success = m.sendMessage(recipientPubKey,message)
+			if not success:
+				print("Connection is broken!/Unable to connect!")
+				break
 		else:
 			break
 
@@ -33,5 +36,4 @@ messageGetterThread.start()
 
 while True:
 	recipientPubKey = input("You wanna talk with: ")
-	print(m.iplookups(recipientPubKey))
 	messageSender()
