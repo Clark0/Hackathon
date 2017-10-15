@@ -3,17 +3,24 @@ from socket import *
 import threading
 from queue import Queue
 import messageProcessing
+import msgCrypto
+from Crypto.PublicKey import RSA
 
 class messaging:
-	def __init__(self, myPubKey):
+	def __init__(self):
 		self.broadcastQ = Queue()
 		self.messageQ = Queue()
 		self.lock = threading.Lock()
 		self.table = {}
-		self.myPubKey = myPubKey
-		self.broadCastingPort = 62542
-		self.ipReceivingPort = 62541
-		self.messageReceivingPort = 62540
+
+		# generate Public and Private Key pair
+		msgCrypto.generateKeys()
+		self.strPubKey, self.PrivKey = msgCrypto.readKeys()
+		self.PubKey = RSA.importKey(self.strPubKey.decode())
+
+		self.broadCastingPort = 62142
+		self.ipReceivingPort = 62141
+		self.messageReceivingPort = 62140
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broacastReceivingSocket = socket(AF_INET,SOCK_DGRAM)
@@ -26,6 +33,7 @@ class messaging:
 		self.messageReceivingSocket.bind(("",self.messageReceivingPort))
 		self.messageReceivingSocket.listen(1)
 
+
 		answerThread = threading.Thread(target=self.Answer)
 		answerThread.start()
 		broadcasterThread = threading.Thread(target=self.broadcaster)
@@ -33,7 +41,7 @@ class messaging:
 		messageReceiverThread = threading.Thread(target=self.messageReceiver)
 		messageReceiverThread.start()
 
-		self.table[self.myPubKey] = (self.myIP,float('Inf'))
+		self.table[self.strPubKey] = (self.myIP, float('Inf'))
 
 	def iplookups(self, targetPubKey):
 		for x in range(3):
@@ -92,22 +100,22 @@ class messaging:
 		while True:
 			message, Address = self.broacastReceivingSocket.recvfrom(2048)
 			decodedMessage = message.decode()
-			if decodedMessage != self.myPubKey:
+			if decodedMessage != self.strPubKey:
 				continue
-			self.ipSendingSocket.sendto(self.myPubKey.encode(),(Address[0], self.ipReceivingPort))
+			self.ipSendingSocket.sendto(self.strPubKey.encode(),(Address[0], self.ipReceivingPort))
 
 	def sendMessage(self,recipientPubKey,message):
-		print("Finding IP of "+ recipientPubKey)
+		print("Finding IP of " + recipientPubKey)
 		ip = self.iplookups(recipientPubKey)
 		if ip:
 			print("IP found!")
-			packedMsg = messageProcessing.messagePacking(self.myPubKey,
+			packedMsg = messageProcessing.messagePacking(self.strPubKey,
 															recipientPubKey,
 															message)
 			try:
 				print("Sending Message!")
 				self.messageSendingSocket = socket(AF_INET, SOCK_STREAM)
-				self.messageSendingSocket.connect((ip,self.messageReceivingPort))
+				self.messageSendingSocket.connect((ip, self.messageReceivingPort))
 				self.messageSendingSocket.send(packedMsg)
 				#this one need to add to encrypt later
 				self.messageSendingSocket.close()
