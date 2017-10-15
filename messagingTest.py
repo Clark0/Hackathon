@@ -18,10 +18,16 @@ def inputPubKey():
 
 def messageSender():
 	while True:
+<<<<<<< HEAD
 		message = "~" + input("")
 		message = "~"+input("")
 		if message != "EXIT":
 			m.sendMessage(recipientPubKey, message)
+=======
+		message = input("")
+		if message!="EXIT":
+			m.sendMessage(recipientPubKey,message)
+>>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
 		else:
 			break
 
@@ -31,8 +37,13 @@ def messageGetter():
 		if rawmsg:
 			msg = messageProcessing.messageUnpacking(rawmsg, m.PrivKey)
 			print()
+<<<<<<< HEAD
 			# print(msg['from']+" says:")
 			print(msg['content'][1:])
+=======
+			print(msg['from']+" says:")
+			print(msg['content'])
+>>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
 			print("at "+msg['time-sent'])
 			print() 
 		time.sleep(1)

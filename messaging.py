@@ -12,6 +12,7 @@ class messaging:
 		self.messageQ = Queue()
 		self.lock = threading.Lock()
 		self.table = {}
+<<<<<<< HEAD
 
 		# generate Public and Private Key pair
 		msgCrypto.generateKeys()
@@ -21,6 +22,12 @@ class messaging:
 		self.broadCastingPort = 62112
 		self.ipReceivingPort = 62111
 		self.messageReceivingPort = 62110
+=======
+		self.myPubKey = myPubKey
+		self.broadCastingPort = 62542
+		self.ipReceivingPort = 62541
+		self.messageReceivingPort = 62540
+>>>>>>> parent of ae3c471... Fixed lost prefix in msg-content
 		self.myIP = self.getMyIP()
 		self.broadCasting = socket(AF_INET, SOCK_DGRAM)
 		self.broacastReceivingSocket = socket(AF_INET,SOCK_DGRAM)
